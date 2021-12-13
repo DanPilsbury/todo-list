@@ -6,7 +6,7 @@ db.mongoose = mongoose;
 if (process.env.NODE_ENV === 'production') {
     db.url = process.env.MONGO_URI;
 } else {
-    db.url = 'mongodb://localhost:27017/test';
+    db.url = 'mongodb://localhost:27017/todo';
 }
 console.log('database uri:', db.url);
 

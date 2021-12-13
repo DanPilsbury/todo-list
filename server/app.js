@@ -7,6 +7,7 @@ const history = require('connect-history-api-fallback');
 const db = require('./db/db_config');
 
 const indexRouter = require('./routes/index');
+const todoRouter = require('./routes/todo');
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.use(history());
 
 // Set up user session
 app.use(session({
-    secret: 'neighborhood-connect-secret',
+    secret: 'todo-secret',
     resave: true,
     saveUninitialized: true
   }));
@@ -28,7 +29,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, isProduction ? 'dist' : 'public')));
 
 db.mongoose
@@ -46,6 +46,7 @@ db.mongoose
 
 
 app.use('/', indexRouter);
+app.use('/todo', todoRouter);
 
 
 // Catch all other routes into a meaningful error message
@@ -56,7 +57,7 @@ app.all('*', (req, res) => {
       Please use only supported routes below
       <br><br>
   
-      <b>Home Neighborhood Connect</b>
+      <b>Home Todo</b>
       <br>
       GET / -- Go to home page
       <br>

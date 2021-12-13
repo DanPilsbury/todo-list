@@ -1,5 +1,5 @@
 {
-  "name": "neighborhood_connect",
+  "name": "todo",
   "version": "0.0.0",
   "private": true,
   "author": "Katie Pelton, Shannon Hagmaier, Dan Pilsbury, Ashton Robinson",
@@ -38,6 +38,7 @@
     "vue-cookie": "^1.1.4",
     "vue-router": "^3.5.2",
     "vuetify": "^2.4.0",
+    "vuex": "^3.6.2",
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
