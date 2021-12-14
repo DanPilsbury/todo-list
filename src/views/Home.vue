@@ -1,32 +1,16 @@
 <template>
-    <v-main >
-      About Page
-    <v-container>
-      <v-form ref="form">
-        <v-text-field
-          v-model="title"
-          :rules="rules"
-          label="title"
-        ></v-text-field>
-        <v-text-field
-          v-model="description"
-          label="description"
-        ></v-text-field>
-        <v-btn @click="onClick()">
-          submit
-        </v-btn>
-      </v-form>
-    </v-container>
-    </v-main>
+  <TodoList/>
 </template>
 
 <script>
 
 import axios from 'axios';
+import TodoList from '../components/TodoList.vue'
 
 export default {
-  name: "About",
+  name: "Home",
   components: {
+    TodoList
   },
   data: function() {
     return {

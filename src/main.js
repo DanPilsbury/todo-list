@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import App from "./App.vue";
-import About from './views/About.vue'
+import About from './views/Home.vue'
 import vuetify from './plugins/vuetify'
 import VueCookie from 'vue-cookie';
 
