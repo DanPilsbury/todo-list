@@ -1,11 +1,6 @@
 <template>
-<div>
-    <v-app-bar
-      app
-      color="blue accent-2"
-      dark
-      clipped-left
-    >
+  <div>
+    <v-app-bar app color="blue accent-2" dark clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Todo</v-toolbar-title>
@@ -24,73 +19,72 @@
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
     </v-app-bar>
-    
 
-    <v-navigation-drawer
-      app
-      v-model="drawer"
-      clipped
-    >
-    <v-list>
-    <v-list-item-group
-        v-model="group"
-        active-class="deep-purple--text text--accent-4"
-    >
-        <v-list-item>
-            <v-list-item-title class='font-weight-black ml-2' >All</v-list-item-title>
-        </v-list-item>
-        <v-expansion-panels>
-        <v-expansion-panel class='my-0' style="border-radius: 0px;">
-            <v-expansion-panel-header class='font-weight-black'>
+    <v-navigation-drawer app v-model="drawer" clipped>
+      <v-list>
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-title class="font-weight-black ml-2"
+              >All</v-list-item-title
+            >
+          </v-list-item>
+          <v-expansion-panels>
+            <v-expansion-panel class="my-0" style="border-radius: 0px">
+              <v-expansion-panel-header class="font-weight-black">
                 Projects
-            </v-expansion-panel-header>
-            <v-expansion-panel-content class='pa-0'>
-                    <v-list-item v-for='(project, index) in projects' v-bind:key='index'>
-                        <v-list-item-title>{{project}}</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item v-if='!addProject'>
-                        <v-btn @click="addProject = !addProject" elevation="0" color="white">
-                            <v-icon left>
-                                mdi-plus-circle
-                            </v-icon>
-                            Add Project
-                        </v-btn>
-                    </v-list-item>
-                    <!-- input to add project -->
-                    <v-list-item v-if='addProject'>
-                        <v-text-field label='project name' v-model="projectName"></v-text-field>
-                    </v-list-item>
-                    <v-list-item v-if='addProject'>
-                        <v-btn @click='createProject'>
-                          add project
-                        </v-btn>
-                    </v-list-item>
-                    
-            </v-expansion-panel-content>
-        </v-expansion-panel>
-        </v-expansion-panels>
-    </v-list-item-group>
-    </v-list>
-
+              </v-expansion-panel-header>
+              <v-expansion-panel-content class="pa-0">
+                <v-list-item
+                  v-for="(project, index) in projects"
+                  v-bind:key="index"
+                >
+                  <v-list-item-title>{{ project }}</v-list-item-title>
+                </v-list-item>
+                <v-list-item v-if="!addProject">
+                  <v-btn
+                    @click="addProject = !addProject"
+                    elevation="0"
+                    color="white"
+                  >
+                    <v-icon left> mdi-plus-circle </v-icon>
+                    Add Project
+                  </v-btn>
+                </v-list-item>
+                <!-- input to add project -->
+                <v-list-item v-if="addProject">
+                  <v-text-field
+                    label="project name"
+                    v-model="projectName"
+                  ></v-text-field>
+                </v-list-item>
+                <v-list-item v-if="addProject">
+                  <v-btn @click="createProject"> add project </v-btn>
+                </v-list-item>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-list-item-group>
+      </v-list>
     </v-navigation-drawer>
-</div>
+  </div>
 </template>
 
 <script>
-
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "Navbar",
-  components: {
-  },
-  data: function() {
+  components: {},
+  data: function () {
     return {
-        drawer: true,
-        group: null,
-        projects: [],
-        addProject: false,
-        projectName: '',
+      drawer: true,
+      group: null,
+      projects: [],
+      addProject: false,
+      projectName: "",
     };
   },
   created: function () {
@@ -99,30 +93,25 @@ export default {
   computed: {
     console: () => console,
   },
-  watch: {
-  },
+  watch: {},
   methods: {
     refreshProjects() {
-      axios.get('/project')
-      .then((response) => {
+      axios.get("/project").then((response) => {
         this.projects = response.data;
       });
     },
     createProject() {
-      const bodyContent = {name: this.projectName}
-      axios.post('/project', bodyContent)
-        .then((response) => {
-          this.console.log('create project', response)
-        })
-      this.projectName = '';
+      const bodyContent = { name: this.projectName };
+      axios.post("/project", bodyContent).then((response) => {
+        this.console.log("create project", response);
+      });
+      this.projectName = "";
       this.addProject = false;
       this.refreshProjects();
-    }
+    },
   },
-  mounted: function() {
-  }
+  mounted: function () {},
 };
 </script>
-    
-<style scoped>
-</style>
+
+<style scoped></style>

@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import App from "./App.vue";
-import About from './views/Home.vue'
-import vuetify from './plugins/vuetify'
-import VueCookie from 'vue-cookie';
+import About from "./views/Home.vue";
+import vuetify from "./plugins/vuetify";
+import VueCookie from "vue-cookie";
 
 Vue.use(VueCookie);
 
@@ -14,19 +14,12 @@ Vue.config.productionTip = false;
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
-  routes: [
-    { path: "/", component: About, props: true },
-  ],
+  routes: [{ path: "/", component: About, props: true }],
 });
 
 new Vue({
   el: "#app",
   router,
   vuetify,
-  render: (h) => h(App)
+  render: (h) => h(App),
 });
-
-
-
-
-

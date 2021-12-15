@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 const db = {};
 db.mongoose = mongoose;
-if (process.env.NODE_ENV === 'production') {
-    db.url = process.env.MONGO_URI;
+if (process.env.NODE_ENV === "production") {
+  db.url = process.env.MONGO_URI;
 } else {
-    db.url = 'mongodb://localhost:27017/todo';
+  db.url = "mongodb://localhost:27017/todo";
 }
-console.log('database uri:', db.url);
+console.log("database uri:", db.url);
 
 module.exports = db;

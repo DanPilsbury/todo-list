@@ -58,6 +58,7 @@ export default {
     methods: {
         onClick(project) {
             this.console.log('project')
+    //asdioj
             this.taskProject = project;
         },
         cancelAdd() {

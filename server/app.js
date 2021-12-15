@@ -1,59 +1,58 @@
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const session = require('express-session');
-const history = require('connect-history-api-fallback');
-const db = require('./db/db_config');
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const session = require("express-session");
+const history = require("connect-history-api-fallback");
+const db = require("./db/db_config");
 
-const indexRouter = require('./routes/index');
-const todoRouter = require('./routes/todo');
-const projectRouter = require('./routes/project');
+const indexRouter = require("./routes/index");
+const todoRouter = require("./routes/todo");
+const projectRouter = require("./routes/project");
 
 const app = express();
 
-require('dotenv').config();
+require("dotenv").config();
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === "production";
 
 app.use(history());
 
 // Set up user session
-app.use(session({
-    secret: 'todo-secret',
+app.use(
+  session({
+    secret: "todo-secret",
     resave: true,
-    saveUninitialized: true
-  }));
-  
+    saveUninitialized: true,
+  })
+);
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, isProduction ? 'dist' : 'public')));
+app.use(express.static(path.join(__dirname, isProduction ? "dist" : "public")));
 
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
   .then(() => {
     console.log("Connected to the database!");
   })
-  .catch(err => {
+  .catch((err) => {
     console.log("Cannot connect to the database!", err);
     process.exit();
   });
 
-
-app.use('/', indexRouter);
-app.use('/todo', todoRouter);
-app.use('/project', projectRouter);
-
+app.use("/", indexRouter);
+app.use("/todo", todoRouter);
+app.use("/project", projectRouter);
 
 // Catch all other routes into a meaningful error message
-app.all('*', (req, res) => {
-    const errorMessage = `
+app.all("*", (req, res) => {
+  const errorMessage = `
       Cannot find the resource <b>${req.url}</b>
       <br>
       Please use only supported routes below
@@ -83,8 +82,8 @@ app.all('*', (req, res) => {
       <br>
       POST /api/session -- Authenticate with username into the server
     `;
-  
-    res.status(404).send(errorMessage);
-  });
+
+  res.status(404).send(errorMessage);
+});
 
 module.exports = app;

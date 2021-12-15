@@ -1,47 +1,44 @@
 <template>
-  <TodoList/>
+  <TodoList />
 </template>
 
 <script>
-
-import axios from 'axios';
-import TodoList from '../components/TodoList.vue'
+import axios from "axios";
+import TodoList from "../components/TodoList.vue";
 
 export default {
   name: "Home",
   components: {
-    TodoList
+    TodoList,
   },
-  data: function() {
+  data: function () {
     return {
-      title: '',
-      description: '',
-      rules: [(s) => s.length > 0 || 'required']
+      title: "",
+      description: "",
+      rules: [(s) => s.length > 0 || "required"],
     };
   },
   computed: {
     console: () => console,
   },
-  watch: {
-  },
+  watch: {},
   methods: {
     onClick() {
       if (this.$refs.form.validate()) {
-        const bodyContent = {title: this.title, descripiton: this.description}
-        axios.post('/todo', bodyContent)
-          .then((response) => {
-            this.console.log(response.data);
-          });
-        this.title = '';
-        this.description = '';
+        const bodyContent = {
+          title: this.title,
+          descripiton: this.description,
+        };
+        axios.post("/todo", bodyContent).then((response) => {
+          this.console.log(response.data);
+        });
+        this.title = "";
+        this.description = "";
       }
     },
-
   },
-  mounted: function() {
-  }
+  mounted: function () {},
 };
 </script>
-    
-<style scoped>
-</style>
+
+<style scoped></style>
