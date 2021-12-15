@@ -9,13 +9,16 @@ const TodoItem = new Schema(
         },
         description: {
           type: String,
-          required: false
+          required: true
         },
         done: {
           type: Boolean,
           required: true,
           default: false
-        }
+        },
+        project: {
+          type: String,
+        },
     }
 );
 // mongoose will automatically create the collection for our DB

@@ -5,6 +5,17 @@ const router = express.Router();
 const Todo = require("../controllers/todo-controller.js");
 
 /**
+ * get all todos
+ * 
+ * @name Get /todo
+ * 
+ */
+ router.get('/', async (req, res) => {
+    const todos = await Todo.findAll();
+    res.status(200).json(todos).end();
+});
+
+/**
  * Create a new Todo
  * 
  * @name POST /todo
@@ -14,7 +25,7 @@ const Todo = require("../controllers/todo-controller.js");
  */
 router.post('/', async (req, res) => {
     console.log('post todo', req.body);
-    const todo = await Todo.addOne(req.body.title, req.body.description);
+    const todo = await Todo.addOne(req.body.title, req.body.description, req.project);
     res.status(200).json(todo).end();
 });
 

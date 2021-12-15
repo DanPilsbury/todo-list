@@ -8,6 +8,7 @@ const db = require('./db/db_config');
 
 const indexRouter = require('./routes/index');
 const todoRouter = require('./routes/todo');
+const projectRouter = require('./routes/project');
 
 const app = express();
 
@@ -47,6 +48,7 @@ db.mongoose
 
 app.use('/', indexRouter);
 app.use('/todo', todoRouter);
+app.use('/project', projectRouter);
 
 
 // Catch all other routes into a meaningful error message

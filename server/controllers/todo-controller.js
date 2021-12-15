@@ -9,9 +9,19 @@ const findOne = async function (id){
     }
 }
 
-const addOne = async function (title, description){
+const findAll = async function (){
+    try{
+        const todos = await Todo.find();
+        return todos;
+    } catch(err){
+        return err;
+    }
+}
+
+const addOne = async function (title, description, project){
     try {
-        const todo = new Todo({title: title, description: description});
+        console.log('add one')
+        const todo = new Todo({title: title, description: description, project: project});
         await todo.save();
         return todo;
     } catch(err) {
@@ -41,6 +51,7 @@ const deleteOne = async function (id){
 
 module.exports = Object.freeze({
     findOne,
+    findAll,
     addOne,
     completeOne,
     deleteOne

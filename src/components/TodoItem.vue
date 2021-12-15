@@ -4,12 +4,11 @@
     </v-checkbox>
     <v-list class='my-0'>
         <v-list-item class='mx-1 my-0 font-weight-normal'>
-            
-            Title
+            {{todo.title}}
         </v-list-item>
         
         <v-list-item class='mx-1 my-0 font-weight-light'>
-            Description
+            {{todo.description}}
         </v-list-item>
     </v-list>
     <v-btn
@@ -26,7 +25,7 @@
 export default {
     name: "TodoItem",
     props: {
-
+        todo: Object
     },
     data() {
         return {

@@ -45,9 +45,27 @@
                 Projects
             </v-expansion-panel-header>
             <v-expansion-panel-content class='pa-0'>
-                    <v-list-item v-for='project in projects' v-bind:key='project'>
+                    <v-list-item v-for='(project, index) in projects' v-bind:key='index'>
                         <v-list-item-title>{{project}}</v-list-item-title>
                     </v-list-item>
+                    <v-list-item v-if='!addProject'>
+                        <v-btn @click="addProject = !addProject" elevation="0" color="white">
+                            <v-icon left>
+                                mdi-plus-circle
+                            </v-icon>
+                            Add Project
+                        </v-btn>
+                    </v-list-item>
+                    <!-- input to add project -->
+                    <v-list-item v-if='addProject'>
+                        <v-text-field label='project name' v-model="projectName"></v-text-field>
+                    </v-list-item>
+                    <v-list-item v-if='addProject'>
+                        <v-btn @click='createProject'>
+                          add project
+                        </v-btn>
+                    </v-list-item>
+                    
             </v-expansion-panel-content>
         </v-expansion-panel>
         </v-expansion-panels>
@@ -60,16 +78,23 @@
 
 <script>
 
+import axios from 'axios';
+
 export default {
   name: "Navbar",
   components: {
   },
   data: function() {
     return {
-        drawer: false,
+        drawer: true,
         group: null,
-        projects: ['classes', 'work', 'basketball']
+        projects: [],
+        addProject: false,
+        projectName: '',
     };
+  },
+  created: function () {
+    this.refreshProjects();
   },
   computed: {
     console: () => console,
@@ -77,6 +102,22 @@ export default {
   watch: {
   },
   methods: {
+    refreshProjects() {
+      axios.get('/project')
+      .then((response) => {
+        this.projects = response.data;
+      });
+    },
+    createProject() {
+      const bodyContent = {name: this.projectName}
+      axios.post('/project', bodyContent)
+        .then((response) => {
+          this.console.log('create project', response)
+        })
+      this.projectName = '';
+      this.addProject = false;
+      this.refreshProjects();
+    }
   },
   mounted: function() {
   }
