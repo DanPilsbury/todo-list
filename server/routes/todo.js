@@ -24,7 +24,6 @@ router.get("/", async (req, res) => {
  * @param {String} description the description of todo item
  */
 router.post("/", async (req, res) => {
-  console.log("post todo", req.body);
   const todo = await Todo.addOne(
     req.body.title,
     req.body.description,

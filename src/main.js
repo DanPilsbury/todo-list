@@ -3,9 +3,7 @@ import VueRouter from "vue-router";
 import App from "./App.vue";
 import About from "./views/Home.vue";
 import vuetify from "./plugins/vuetify";
-import VueCookie from "vue-cookie";
-
-Vue.use(VueCookie);
+import store from "./store";
 
 export const eventBus = new Vue();
 
@@ -19,6 +17,7 @@ export const router = new VueRouter({
 
 new Vue({
   el: "#app",
+  store,
   router,
   vuetify,
   render: (h) => h(App),

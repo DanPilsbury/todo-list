@@ -2,7 +2,6 @@
   <v-main>
     <v-card width="70%" class="mx-auto my-6" elevation="1" rounded="lg">
       <v-card-title class="justify-center"> Todo Items </v-card-title>
-      <!-- <v-divider class='py-0'></v-divider> -->
       <v-list>
         <template v-for="(item, index) in items">
           <v-divider :key="(index + 1) * -1" class=""></v-divider>
@@ -11,14 +10,14 @@
           </v-list-item>
         </template>
         <v-divider class=""></v-divider>
-        <v-list-item v-if="!addItem">
-          <v-btn @click="addItem = !addItem" elevation="0" color="white">
+        <v-list-item v-if="!todoForm">
+          <v-btn @click="openTodoForm" elevation="0" color="white">
             <v-icon left> mdi-plus-circle </v-icon>
             Add Item
           </v-btn>
         </v-list-item>
 
-        <v-list-item v-if="addItem">
+        <v-list-item v-if="todoForm">
           <CreateTodo />
         </v-list-item>
       </v-list>
@@ -27,10 +26,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import TodoItem from "./TodoItem.vue";
 import CreateTodo from "./CreateTodo.vue";
-import { eventBus } from "../main";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "TodoList",
@@ -40,31 +38,16 @@ export default {
   },
   props: {},
   data() {
-    return {
-      addItem: false,
-      items: [{ title: "item 1" }, { title: "item 2" }, { title: "item 3" }],
-    };
-  },
-  created: function () {
-    this.refreshItems();
-    eventBus.$on("cancelAdd", () => {
-      this.addItem = !this.addItem;
-    });
-    eventBus.$on("refreshItems", () => {
-      this.refreshItems();
-    });
+    return {};
   },
   computed: {
     console: () => console,
+    ...mapGetters({ items: "allTodos" }),
+    ...mapGetters({ todoForm: "todoForm" }),
   },
-  mounted: function () {},
+  created: function () {},
   methods: {
-    refreshItems() {
-      axios.get("/todo").then((response) => {
-        this.console.log(response.data);
-        this.items = response.data;
-      });
-    },
+    ...mapMutations(["openTodoForm"]),
   },
 };
 </script>

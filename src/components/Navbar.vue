@@ -43,24 +43,20 @@
                 >
                   <v-list-item-title>{{ project }}</v-list-item-title>
                 </v-list-item>
-                <v-list-item v-if="!addProject">
-                  <v-btn
-                    @click="addProject = !addProject"
-                    elevation="0"
-                    color="white"
-                  >
+                <v-list-item v-if="!projectForm">
+                  <v-btn @click="openProjectForm" elevation="0" color="white">
                     <v-icon left> mdi-plus-circle </v-icon>
                     Add Project
                   </v-btn>
                 </v-list-item>
                 <!-- input to add project -->
-                <v-list-item v-if="addProject">
+                <v-list-item v-if="projectForm">
                   <v-text-field
                     label="project name"
                     v-model="projectName"
                   ></v-text-field>
                 </v-list-item>
-                <v-list-item v-if="addProject">
+                <v-list-item v-if="projectForm">
                   <v-btn @click="createProject"> add project </v-btn>
                 </v-list-item>
               </v-expansion-panel-content>
@@ -73,7 +69,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "Navbar",
@@ -82,32 +78,27 @@ export default {
     return {
       drawer: true,
       group: null,
-      projects: [],
-      addProject: false,
       projectName: "",
     };
   },
   created: function () {
-    this.refreshProjects();
+    this.console.log(this.projectForm);
   },
   computed: {
     console: () => console,
+    ...mapGetters({ projects: "allProjects", projectForm: "projectForm" }),
   },
-  watch: {},
   methods: {
-    refreshProjects() {
-      axios.get("/project").then((response) => {
-        this.projects = response.data;
-      });
-    },
+    ...mapActions(["addProject"]),
+    ...mapMutations(["closeProjectForm", "openProjectForm"]),
     createProject() {
-      const bodyContent = { name: this.projectName };
-      axios.post("/project", bodyContent).then((response) => {
-        this.console.log("create project", response);
-      });
+      const bodyContent = {
+        name: this.projectName,
+      };
+      this.console.log(this.projectName);
+      this.addProject(bodyContent);
       this.projectName = "";
-      this.addProject = false;
-      this.refreshProjects();
+      this.closeProjectForm();
     },
   },
   mounted: function () {},

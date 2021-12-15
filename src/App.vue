@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import Navbar from "./components/Navbar.vue";
 
 export default {
@@ -17,11 +18,17 @@ export default {
     return {};
   },
   mounted() {},
-  created: function () {},
+  created: function () {
+    this.fetchTodos();
+    this.fetchProjects();
+  },
   computed: {
     console: () => console,
   },
-  methods: {},
+  methods: {
+    ...mapActions(["fetchTodos"]),
+    ...mapActions(["fetchProjects"]),
+  },
 };
 </script>
 

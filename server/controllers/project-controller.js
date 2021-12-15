@@ -4,7 +4,7 @@ const addOne = async function (name) {
   try {
     const project = new Project({ name: name });
     await project.save();
-    return todo;
+    return project.name;
   } catch (err) {
     return err;
   }
