@@ -1,9 +1,11 @@
 <template>
   <v-main>
     <v-card width="70%" class="mx-auto my-6" elevation="1" rounded="lg">
-      <v-card-title class="justify-center"> Todo Items </v-card-title>
+      <v-card-title class="justify-center">
+        {{ currentProject }} Todo Items
+      </v-card-title>
       <v-list>
-        <template v-for="(item, index) in items">
+        <template v-for="(item, index) in filteredItems">
           <v-divider :key="(index + 1) * -1" class=""></v-divider>
           <v-list-item class="" :key="index">
             <TodoItem v-bind:todo="item" />
@@ -42,8 +44,11 @@ export default {
   },
   computed: {
     console: () => console,
-    ...mapGetters({ items: "allTodos" }),
-    ...mapGetters({ todoForm: "todoForm" }),
+    ...mapGetters({
+      filteredItems: "filteredTodos",
+      todoForm: "todoForm",
+      currentProject: "currentProject",
+    }),
   },
   created: function () {},
   methods: {

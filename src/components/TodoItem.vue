@@ -6,8 +6,11 @@
         {{ todo.title }}
       </v-list-item>
 
-      <v-list-item class="mx-1 my-0 font-weight-light">
+      <v-list-item v-if="todo.description" class="mx-1 my-0 font-weight-light">
         {{ todo.description }}
+      </v-list-item>
+      <v-list-item v-if="todo.project" class="mx-1 my-0 font-weight-light">
+        {{ todo.project }}
       </v-list-item>
     </v-list>
     <v-btn fab x-small elevation="0" class="ml-auto my-auto">

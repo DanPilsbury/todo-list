@@ -22,11 +22,8 @@
 
     <v-navigation-drawer app v-model="drawer" clipped>
       <v-list>
-        <v-list-item-group
-          v-model="group"
-          active-class="deep-purple--text text--accent-4"
-        >
-          <v-list-item>
+        <v-list-item-group>
+          <v-list-item @click="selectProject('')">
             <v-list-item-title class="font-weight-black ml-2"
               >All</v-list-item-title
             >
@@ -40,6 +37,7 @@
                 <v-list-item
                   v-for="(project, index) in projects"
                   v-bind:key="index"
+                  @click="selectProject(project)"
                 >
                   <v-list-item-title>{{ project }}</v-list-item-title>
                 </v-list-item>
@@ -81,22 +79,31 @@ export default {
       projectName: "",
     };
   },
-  created: function () {
-    this.console.log(this.projectForm);
-  },
+  created: function () {},
   computed: {
     console: () => console,
-    ...mapGetters({ projects: "allProjects", projectForm: "projectForm" }),
+    ...mapGetters({
+      projects: "allProjects",
+      projectForm: "projectForm",
+      currentProject: "currentProject",
+    }),
   },
   methods: {
     ...mapActions(["addProject"]),
-    ...mapMutations(["closeProjectForm", "openProjectForm"]),
+    ...mapMutations([
+      "closeProjectForm",
+      "openProjectForm",
+      "setCurrentProject",
+    ]),
+    selectProject(name) {
+      this.setCurrentProject(name);
+    },
     createProject() {
       const bodyContent = {
         name: this.projectName,
       };
-      this.console.log(this.projectName);
       this.addProject(bodyContent);
+      this.setCurrentProject(this.projectName);
       this.projectName = "";
       this.closeProjectForm();
     },

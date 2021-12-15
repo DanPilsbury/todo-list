@@ -14,12 +14,12 @@
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark v-bind="attrs" v-on="on">
-              {{ taskProject }}
+              {{ projectDropdownName }}
             </v-btn>
           </template>
           <v-list>
             <v-list-item
-              @click="onClick(project)"
+              @click="selectProject(project)"
               v-for="(project, index) in projects"
               :key="index"
             >
@@ -38,35 +38,46 @@
 
 <script>
 // import axios from "axios";
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "CreateTodo",
   props: {},
   data() {
     return {
-      projects: ["one", "two", "three"],
       taskTitle: "",
       taskDescription: "",
-      taskProject: "Project",
+      selectedProject: "",
     };
   },
   computed: {
     console: () => console,
+    ...mapGetters({
+      projects: "allProjects",
+      currentProject: "currentProject",
+    }),
   },
-  created: function () {},
+  created: function () {
+    this.projectDropdownName = this.currentProject || "Add Project";
+    this.projects.push("None");
+  },
   methods: {
     ...mapActions(["addTodo"]),
     ...mapMutations(["closeTodoForm", "openTodoForm"]),
-    onClick(project) {
-      this.taskProject = project;
+    selectProject(project) {
+      this.selectedProject = project;
+      this.projectDropdownName = project;
     },
     addTask() {
+      if (this.selectedProject == "None") {
+        this.selectedProject = "";
+      }
       const bodyContent = {
         title: this.taskTitle,
         description: this.taskDescription,
         project: this.taskProject,
       };
+      this.console.log(this.taskProject);
       this.addTodo(bodyContent);
       this.taskTitle = "";
       this.taskDescription = "";

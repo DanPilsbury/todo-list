@@ -20,7 +20,6 @@ const findAll = async function () {
 
 const addOne = async function (title, description, project) {
   try {
-    console.log("add one");
     const todo = new Todo({
       title: title,
       description: description,

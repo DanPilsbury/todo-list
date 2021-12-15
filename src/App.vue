@@ -26,8 +26,7 @@ export default {
     console: () => console,
   },
   methods: {
-    ...mapActions(["fetchTodos"]),
-    ...mapActions(["fetchProjects"]),
+    ...mapActions(["fetchTodos", "fetchProjects"]),
   },
 };
 </script>

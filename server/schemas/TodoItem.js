@@ -8,7 +8,7 @@ const TodoItem = new Schema({
   },
   description: {
     type: String,
-    required: true,
+    default: "",
   },
   done: {
     type: Boolean,
@@ -17,6 +17,7 @@ const TodoItem = new Schema({
   },
   project: {
     type: String,
+    default: "",
   },
 });
 // mongoose will automatically create the collection for our DB

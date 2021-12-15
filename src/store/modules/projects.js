@@ -3,17 +3,18 @@ import axios from "axios";
 const state = {
   projects: [],
   projectForm: false,
+  currentProject: "",
 };
 
 const getters = {
   allProjects: (state) => state.projects,
   projectForm: (state) => state.projectForm,
+  currentProject: (state) => state.currentProject,
 };
 
 const actions = {
   async fetchProjects({ commit }) {
     const response = await axios.get("/project");
-    console.log(response.data);
     commit("setProjects", response.data);
   },
   async addProject({ commit }, project) {
@@ -27,6 +28,8 @@ const mutations = {
   newProject: (state, project) => state.projects.push(project),
   openProjectForm: (state) => (state.projectForm = true),
   closeProjectForm: (state) => (state.projectForm = false),
+  setCurrentProject: (state, projectName) =>
+    (state.currentProject = projectName),
 };
 
 export default {

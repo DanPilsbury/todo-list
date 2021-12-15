@@ -2,18 +2,23 @@ import axios from "axios";
 
 const state = {
   todos: [],
+  filteredTodos: [],
   todoForm: false,
 };
 
 const getters = {
   allTodos: (state) => state.todos,
+  filteredTodos: (state, getters, rootState) =>
+    state.todos.filter((todo) => {
+      if (rootState.projects.currentProject == "") return true;
+      return todo.project == rootState.projects.currentProject;
+    }),
   todoForm: (state) => state.todoForm,
 };
 
 const actions = {
   async fetchTodos({ commit }) {
     const response = await axios.get("/todo");
-    console.log(response.data);
     commit("setTodos", response.data);
   },
   async addTodo({ commit }, todo) {
