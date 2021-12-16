@@ -7,8 +7,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "develop": "nodemon ./server/bin/www",
-    "start": "node ./server/bin/www"
+    "develop": "nodemon ./bin/www",
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "@vue/cli-plugin-babel": "^3.0.3",
