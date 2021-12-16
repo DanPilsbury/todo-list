@@ -27,4 +27,16 @@ router.post("/", async (req, res) => {
   res.status(200).json(project).end();
 });
 
+/**
+ * Delete a Project
+ *
+ * @name DELETE /project
+ *
+ * @param {String} id id of project
+ */
+router.delete("/:id", async (req, res) => {
+  const result = await Project.deleteOne(req.params.id);
+  res.status(200).json(result).end();
+});
+
 module.exports = router;

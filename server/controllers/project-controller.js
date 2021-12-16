@@ -4,7 +4,7 @@ const addOne = async function (name) {
   try {
     const project = new Project({ name: name });
     await project.save();
-    return project.name;
+    return project;
   } catch (err) {
     return err;
   }
@@ -13,16 +13,16 @@ const addOne = async function (name) {
 const findAll = async function () {
   try {
     const projects = await Project.find();
-    const projectNames = projects.map((p) => p.name);
-    return projectNames;
+    return projects;
   } catch (err) {
     return err;
   }
 };
 
-const deleteOne = async function () {
+const deleteOne = async function (id) {
   try {
-    console.log("delete");
+    const result = await Project.deleteOne({ _id: id });
+    return result;
   } catch (err) {
     return err;
   }

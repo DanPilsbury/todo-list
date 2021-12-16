@@ -25,25 +25,60 @@
                 <v-list-item
                   v-for="(project, index) in projects"
                   v-bind:key="index"
-                  @click="selectProject(project)"
+                  @click="selectProject(project.name)"
                 >
-                  <v-list-item-title>{{ project }}</v-list-item-title>
-                </v-list-item>
-                <v-list-item v-if="!projectForm">
-                  <v-btn @click="openProjectForm" elevation="0" color="white">
-                    <v-icon left> mdi-plus-circle </v-icon>
-                    Add Project
+                  <v-list-item-title>
+                    {{ project.name }}
+                  </v-list-item-title>
+                  <v-btn
+                    @click.stop="removeProject(project._id)"
+                    fab
+                    x-small
+                    elevation="0"
+                    class="ml-auto"
+                    color="white"
+                  >
+                    <v-icon class="ma-auto" small>mdi-trash-can-outline</v-icon>
                   </v-btn>
                 </v-list-item>
+                <!-- <v-list-item > -->
+                <v-btn
+                  v-if="!projectForm"
+                  @click="openProjectForm"
+                  elevation="0"
+                  color="white"
+                >
+                  <v-icon left> mdi-plus-circle </v-icon>
+                  Add Project
+                </v-btn>
+                <!-- </v-list-item> -->
                 <v-list-item v-if="projectForm">
                   <v-text-field
                     label="project name"
                     v-model="projectName"
                   ></v-text-field>
                 </v-list-item>
-                <v-list-item v-if="projectForm">
-                  <v-btn @click="createProject"> add project </v-btn>
-                </v-list-item>
+                <!-- <v-list-item v-if="projectForm"> -->
+
+                <v-btn
+                  v-if="projectForm"
+                  @click="createProject"
+                  small
+                  class="mx-2"
+                  color="green lighten-2"
+                >
+                  create
+                </v-btn>
+                <v-btn
+                  v-if="projectForm"
+                  @click="closeProjectForm"
+                  small
+                  class="mx-2"
+                  color="red lighten-2"
+                >
+                  cancel
+                </v-btn>
+                <!-- </v-list-item> -->
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -76,7 +111,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(["addProject"]),
+    ...mapActions(["addProject", "deleteProject"]),
     ...mapMutations([
       "closeProjectForm",
       "openProjectForm",
@@ -93,6 +128,10 @@ export default {
       this.setCurrentProject(this.projectName);
       this.projectName = "";
       this.closeProjectForm();
+    },
+    removeProject(id) {
+      this.deleteProject(id);
+      this.setCurrentProject("");
     },
   },
   mounted: function () {},

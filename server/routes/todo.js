@@ -34,6 +34,17 @@ router.post("/", async (req, res) => {
 });
 
 /**
+ * Toggle todo.done
+ *
+ * @name PATCH /todo
+ *
+ */
+router.patch("/done/:id", async (req, res) => {
+  const done = await Todo.toggleDone(req.params.id);
+  res.status(200).json(done).end();
+});
+
+/**
  * Delete a Todo
  *
  * @name DELETE /todo

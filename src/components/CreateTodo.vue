@@ -1,38 +1,47 @@
 <template>
-  <v-row class="my-0 mx-0">
-    <v-list class="my-0">
-      <v-list-item>
-        <v-text-field label="Title" v-model="taskTitle"></v-text-field>
-      </v-list-item>
-      <v-list-item>
-        <v-text-field
-          label="Description"
-          v-model="taskDescription"
-        ></v-text-field>
-      </v-list-item>
-      <v-list-item>
-        <v-menu>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark v-bind="attrs" v-on="on">
-              {{ projectDropdownName }}
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              @click="selectProject(project)"
-              v-for="(project, index) in projects"
-              :key="index"
-            >
-              <v-list-item-title>{{ project }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-list-item>
-      <v-list-item>
-        <v-btn class="mx-1" @click="addTask"> Add Task </v-btn>
-        <v-btn class="mx-1" @click="closeTodoForm"> cancel </v-btn>
-      </v-list-item>
-    </v-list>
+  <v-row>
+    <v-col>
+      <v-list class="my-0">
+        <v-list-item>
+          <v-text-field label="Title" v-model="taskTitle"></v-text-field>
+        </v-list-item>
+        <v-list-item>
+          <v-text-field
+            label="Description"
+            v-model="taskDescription"
+          ></v-text-field>
+        </v-list-item>
+        <v-list-item>
+          <v-menu>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="grey lighten-2" v-bind="attrs" v-on="on">
+                {{ projectDropdownName }}
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item
+                @click="selectProject(project.name)"
+                v-for="(project, index) in projects"
+                :key="index"
+              >
+                <v-list-item-title>{{ project.name }}</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="selectProject('')">
+                <v-list-item-title>No Project</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-list-item>
+        <v-list-item>
+          <v-btn class="mx-1" color="green lighten-2" @click="addTask">
+            Add Task
+          </v-btn>
+          <v-btn class="mx-1" color="red lighten-2" @click="closeTodoForm">
+            cancel
+          </v-btn>
+        </v-list-item>
+      </v-list>
+    </v-col>
   </v-row>
 </template>
 
@@ -47,7 +56,6 @@ export default {
     return {
       taskTitle: "",
       taskDescription: "",
-      selectedProject: "",
     };
   },
   computed: {
@@ -59,28 +67,25 @@ export default {
   },
   created: function () {
     this.projectDropdownName = this.currentProject || "Add Project";
-    this.projects.push("None");
+    this.selectedProject = this.currentProject;
   },
   methods: {
     ...mapActions(["addTodo"]),
     ...mapMutations(["closeTodoForm", "openTodoForm"]),
-    selectProject(project) {
-      this.selectedProject = project;
-      this.projectDropdownName = project;
+    selectProject(projectName) {
+      this.selectedProject = projectName;
+      this.projectDropdownName = projectName || "No Project";
     },
     addTask() {
-      if (this.selectedProject == "None") {
-        this.selectedProject = "";
-      }
       const bodyContent = {
         title: this.taskTitle,
         description: this.taskDescription,
-        project: this.taskProject,
+        project: this.selectedProject,
       };
-      this.console.log(this.taskProject);
       this.addTodo(bodyContent);
       this.taskTitle = "";
       this.taskDescription = "";
+      this.selectedProject = "";
       this.closeTodoForm();
     },
   },

@@ -21,6 +21,10 @@ const actions = {
     const response = await axios.post("/project", project);
     commit("newProject", response.data);
   },
+  async deleteProject({ commit }, id) {
+    await axios.delete(`/project/${id}`);
+    commit("deleteProject", id);
+  },
 };
 
 const mutations = {
@@ -30,6 +34,8 @@ const mutations = {
   closeProjectForm: (state) => (state.projectForm = false),
   setCurrentProject: (state, projectName) =>
     (state.currentProject = projectName),
+  deleteProject: (state, id) =>
+    (state.projects = state.projects.filter((p) => p._id != id)),
 };
 
 export default {

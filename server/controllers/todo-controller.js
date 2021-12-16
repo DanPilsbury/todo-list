@@ -43,6 +43,17 @@ const completeOne = async function (id) {
   }
 };
 
+const toggleDone = async function (id) {
+  try {
+    const todo = await Todo.findOne({ _id: id });
+    todo.done = !todo.done;
+    await todo.save();
+    return todo.done;
+  } catch (err) {
+    return err;
+  }
+};
+
 const deleteOne = async function (id) {
   try {
     const result = await Todo.deleteOne({ _id: id });
@@ -57,5 +68,6 @@ module.exports = Object.freeze({
   findAll,
   addOne,
   completeOne,
+  toggleDone,
   deleteOne,
 });
