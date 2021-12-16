@@ -13,13 +13,21 @@
         {{ todo.project }}
       </v-list-item>
     </v-list>
-    <v-btn fab x-small elevation="0" class="ml-auto my-auto">
+    <v-btn
+      @click="deleteTodo(todo._id)"
+      fab
+      x-small
+      elevation="0"
+      class="ml-auto my-auto"
+    >
       <v-icon class="ma-auto"> mdi-trash-can-outline </v-icon>
     </v-btn>
   </v-row>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "TodoItem",
   props: {
@@ -32,7 +40,9 @@ export default {
     console: () => console,
   },
   created: function () {},
-  methods: {},
+  methods: {
+    ...mapActions(["deleteTodo"]),
+  },
 };
 </script>
 

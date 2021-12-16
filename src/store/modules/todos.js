@@ -25,6 +25,10 @@ const actions = {
     const response = await axios.post("/todo", todo);
     commit("newTodo", response.data);
   },
+  async deleteTodo({ commit }, id) {
+    await axios.delete(`/todo/${id}`);
+    commit("deleteTodo", id);
+  },
 };
 
 const mutations = {
@@ -32,6 +36,8 @@ const mutations = {
   newTodo: (state, todo) => state.todos.push(todo),
   openTodoForm: () => (state.todoForm = true),
   closeTodoForm: () => (state.todoForm = false),
+  deleteTodo: (state, id) =>
+    (state.todos = state.todos.filter((t) => t._id != id)),
 };
 
 export default {

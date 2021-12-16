@@ -45,7 +45,7 @@ const completeOne = async function (id) {
 
 const deleteOne = async function (id) {
   try {
-    const result = await todo.deleteOne({ _id: id });
+    const result = await Todo.deleteOne({ _id: id });
     return result;
   } catch (err) {
     return err;

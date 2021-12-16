@@ -33,4 +33,16 @@ router.post("/", async (req, res) => {
   res.status(200).json(todo).end();
 });
 
+/**
+ * Delete a Todo
+ *
+ * @name DELETE /todo
+ *
+ */
+router.delete("/:id", async (req, res) => {
+  console.log(req.params);
+  const result = await Todo.deleteOne(req.params.id);
+  res.status(200).json(result).end();
+});
+
 module.exports = router;

@@ -1,32 +1,20 @@
 <template>
   <div>
     <v-app-bar app color="blue accent-2" dark clipped-left>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Todo</v-toolbar-title>
-
       <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-filter</v-icon>
-      </v-btn>
-
       <v-btn icon>
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
     </v-app-bar>
-
     <v-navigation-drawer app v-model="drawer" clipped>
       <v-list>
         <v-list-item-group>
           <v-list-item @click="selectProject('')">
-            <v-list-item-title class="font-weight-black ml-2"
-              >All</v-list-item-title
-            >
+            <v-list-item-title class="font-weight-black ml-2">
+              All
+            </v-list-item-title>
           </v-list-item>
           <v-expansion-panels>
             <v-expansion-panel class="my-0" style="border-radius: 0px">
@@ -47,7 +35,6 @@
                     Add Project
                   </v-btn>
                 </v-list-item>
-                <!-- input to add project -->
                 <v-list-item v-if="projectForm">
                   <v-text-field
                     label="project name"
