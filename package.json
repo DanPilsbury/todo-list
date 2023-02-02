@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "author": "Dan Pilsbury",
+  "engines" : {
+    "node" : ">=15.4.0"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
